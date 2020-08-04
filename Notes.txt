@@ -115,6 +115,11 @@ sudo ufw allow ssh
 sudo ufw allow 5000
 sudo ufw enable
 
+scp -r /Volumes/HDD/TD_/Python/FlaskBlog flask@10.0.0.52:~/
+sudo apt install python3-pip, python3-venv
+python3 -m venv FlaskBlog/venv
+source venv/bin/activate
+
 
 
 
