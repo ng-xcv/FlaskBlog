@@ -1,0 +1,123 @@
+export FLASK_APP=flaskblog.py
+
+
+export FLASK_DEBUG=1
+
+pip install flask-wtf
+import secrets
+secrets.token_hex(16)
+
+
+from flaskblog import db
+db.create_all()
+
+Adding elements to the database
+-------------------------------
+
+from flaskblog import User, Post
+
+user_1 = User(username='Ngxcv', email='ng@gmail.com', password='password')
+db.session.add(user_1)
+user_2 = User(username='Ngary', email='ngary@gmail.com', password='password')
+db.session.add(user_2)
+db.session.commit()
+
+User.query.all()
+User.query.first()
+User.query.filter_by(username='corey').all()
+User.query.filter_by(username='corey').first()
+
+user = User.query.filter_by(username='corey').first()
+user // Will display all information of the user
+user.id
+user = User.query.get(1)
+
+post_1 = Post(title='Blog 1', content='Fisrt Post content', user_id=user.id)
+post_2 = Post(title='Blog 2', content='Second Post content', user_id=user.id)
+db.session.add(post_1)
+db.session.add(post_2)
+db.session.commit()
+
+>>> post = Post.query.first()
+>>> post.id
+1
+>>> post.author
+User(Ngxcv, ng@gmail.com, default.jpg)
+
+db.drop_all()
+db.create_all()
+
+pip install flask-bcrypt
+>>> from flask_bcrypt import Bcrypt
+>>> bc = Bcrypt()
+>>> bc.generate_password_hash('testing')
+b'$2b$12$JBMN0R.VxxXyiU0jRJAWn.P966CLO/5SPNltjt3cuXrCs1CwC4S5u'
+>>> bc.generate_password_hash('testing').decode('utf-8')
+'$2b$12$DlxRabn1PSfMQo89K.U65.8X.Bho603Ma7Qfti9dY6WNOgU6X4cFK'
+>>> hp = bc.generate_password_hash('testing').decode('utf-8')
+>>> bc.check_password_hash(hp, 'testing')
+True
+
+
+pip install flask-login
+from flask_login import LoginManager
+
+pip install Pillow
+from PIL import Image
+
+
+from flaskblog.models import Post
+posts = Post.query.paginate()
+posts
+dir(posts)
+posts.page
+posts = Post.query.paginate(page=2)
+posts = Post.query.paginate(per_page=5)
+posts.total
+
+
+from flaskblog.models import Post
+posts = Post.query.paginate(page=6, per_page=1)
+for page in posts.iter_pages()
+print(page)
+
+
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+s = Serializer('secret', 30)
+toekn = s.dumps({'user_id': 1}).decode('utf-8')
+token
+s.loads(token)
+
+
+pip install flask-mail
+
+
+hostnamectl set-hostname flask-server
+hostname
+nano /etc/hosts/
+    Ip hostname
+
+root@ng:/home/ng# adduser flask
+root@ng:/home/ng# adduser flask sudo
+
+scp /Users/ng/.ssh/id_rsa.pub flask@10.0.0.52:~/.ssh/authorized_keys
+sudo chmod 700 /home/flask/.ssh/
+sudo chmod 600 /home/flask/.ssh/*
+
+sudo nano /etc/ssh/sshd_config
+PermitRootLogin no
+passwordAuthentication no
+
+sudo apt-get install ufw
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow ssh
+sudo ufw allow 5000
+sudo ufw enable
+
+
+
+
+
+
+
